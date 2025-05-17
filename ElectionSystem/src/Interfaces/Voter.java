@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -15,12 +16,20 @@ import javax.swing.ImageIcon;
  * @author Aila Arshad
  */
 public class Voter extends javax.swing.JFrame {
-
+    CardLayout cardlayout; // need this to access in all the methods
+    
     /**
      * Creates new form Voter
      */
     public Voter() {
         initComponents();
+        cardlayout = new CardLayout();
+        
+        cardlayout.addLayoutComponent(loginPanel, "loginPanel");
+        cardlayout.addLayoutComponent(pv_mna_Panel, "postVotingPanel");
+        
+        mainPanel.setLayout(cardlayout);
+        cardlayout.show(mainPanel, "loginPanel");
     }
 
     /**
@@ -33,7 +42,7 @@ public class Voter extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        navbarPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -54,8 +63,8 @@ public class Voter extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
+        loginPanel = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -86,13 +95,44 @@ public class Voter extends javax.swing.JFrame {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        pv_mna_Panel = new javax.swing.JPanel();
+        pv_mna_containerPanel = new javax.swing.JPanel();
+        pv_mna_tick_icon = new javax.swing.JLabel();
+        pv_mna_jPanel1 = new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10); // 30 = corner radius
+            }
+        };
+        pv_mna_viewDetailButton = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        pv_mna_candidateName = new javax.swing.JLabel();
+        pv_mna_partyFlag = new javax.swing.JLabel();
+        pv_mna_partyName = new javax.swing.JLabel();
+        pv_mna_partySymbol = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10); // 30 = corner radius
+            }
+        };
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1030, 540));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        navbarPanel.setBackground(new java.awt.Color(255, 255, 255));
+        navbarPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)));
+        navbarPanel.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
@@ -116,7 +156,7 @@ public class Voter extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
         jPanel2.add(jLabel4);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.WEST);
+        navbarPanel.add(jPanel2, java.awt.BorderLayout.WEST);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(270, 60));
@@ -125,6 +165,12 @@ public class Voter extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/home.png"))); // NOI18N
         jLabel1.setText(" Home");
         jLabel1.setToolTipText("");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel4.add(jLabel1);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,6 +199,12 @@ public class Voter extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/voting.png"))); // NOI18N
         jLabel3.setText(" Voting");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -191,6 +243,7 @@ public class Voter extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/setting.png"))); // NOI18N
         jLabel2.setText(" Settings");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel4.add(jLabel2);
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
@@ -209,11 +262,11 @@ public class Voter extends javax.swing.JFrame {
 
         jPanel4.add(jPanel9);
 
-        jPanel1.add(jPanel4, java.awt.BorderLayout.EAST);
+        navbarPanel.add(jPanel4, java.awt.BorderLayout.EAST);
 
-        jPanel8.setLayout(new java.awt.CardLayout());
+        mainPanel.setLayout(new java.awt.CardLayout());
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        loginPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setPreferredSize(new java.awt.Dimension(530, 479));
@@ -246,6 +299,7 @@ public class Voter extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         jPanel12.add(jPanel16, gridBagConstraints);
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(31, 147, 93)));
         jTextField1.setMinimumSize(new java.awt.Dimension(326, 40));
         jTextField1.setPreferredSize(new java.awt.Dimension(326, 40));
@@ -349,41 +403,202 @@ public class Voter extends javax.swing.JFrame {
         jPanel11.setPreferredSize(new java.awt.Dimension(500, 480));
         jPanel11.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
+        loginPanel.setLayout(loginPanelLayout);
+        loginPanelLayout.setHorizontalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginPanelLayout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        loginPanelLayout.setVerticalGroup(
+            loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
 
-        jPanel8.add(jPanel10, "card2");
+        mainPanel.add(loginPanel, "card2");
+
+        pv_mna_Panel.setBackground(new java.awt.Color(191, 218, 200));
+
+        pv_mna_containerPanel.setBackground(new java.awt.Color(191, 218, 200));
+        pv_mna_containerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pv_mna_tick_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pv_mna_tick_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/voted_tick_last.png"))); // NOI18N
+        pv_mna_tick_icon.setToolTipText("");
+        pv_mna_containerPanel.add(pv_mna_tick_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 120, 110));
+
+        pv_mna_jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        pv_mna_jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pv_mna_jPanel1.setOpaque(false);
+
+        pv_mna_viewDetailButton.setBackground(new java.awt.Color(102, 255, 102));
+        pv_mna_viewDetailButton.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        pv_mna_viewDetailButton.setForeground(new java.awt.Color(102, 102, 102));
+        pv_mna_viewDetailButton.setText("View Details");
+        pv_mna_viewDetailButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(31, 147, 93), 2, true));
+        pv_mna_viewDetailButton.setContentAreaFilled(false);
+        pv_mna_viewDetailButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 26)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("You Voted For MNA.");
+        jLabel11.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        jSeparator1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        pv_mna_candidateName.setBackground(new java.awt.Color(153, 153, 153));
+        pv_mna_candidateName.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        pv_mna_candidateName.setForeground(new java.awt.Color(51, 51, 51));
+        pv_mna_candidateName.setText("Fahad Jameel");
+
+        pv_mna_partyFlag.setBackground(new java.awt.Color(153, 153, 153));
+        pv_mna_partyFlag.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/flag_pti.png"))); // NOI18N
+        pv_mna_partyFlag.setText("jLabel12");
+
+        pv_mna_partyName.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        pv_mna_partyName.setForeground(new java.awt.Color(51, 51, 51));
+        pv_mna_partyName.setText("PTI");
+
+        pv_mna_partySymbol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/symbol_pti.png"))); // NOI18N
+        pv_mna_partySymbol.setText("jLabel15");
+
+        javax.swing.GroupLayout pv_mna_jPanel1Layout = new javax.swing.GroupLayout(pv_mna_jPanel1);
+        pv_mna_jPanel1.setLayout(pv_mna_jPanel1Layout);
+        pv_mna_jPanel1Layout.setHorizontalGroup(
+            pv_mna_jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
+            .addGroup(pv_mna_jPanel1Layout.createSequentialGroup()
+                .addGroup(pv_mna_jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pv_mna_jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
+                    .addGroup(pv_mna_jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(pv_mna_partyFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pv_mna_candidateName, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pv_mna_partyName, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(pv_mna_partySymbol, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(pv_mna_jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(pv_mna_viewDetailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pv_mna_jPanel1Layout.setVerticalGroup(
+            pv_mna_jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pv_mna_jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pv_mna_jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pv_mna_jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(pv_mna_partyName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pv_mna_candidateName, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pv_mna_partyFlag, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pv_mna_partySymbol, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pv_mna_viewDetailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+
+        pv_mna_containerPanel.add(pv_mna_jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 480, 270));
+
+        jPanel8.setBackground(new java.awt.Color(31, 147, 93));
+        jPanel8.setMaximumSize(new java.awt.Dimension(88, 38));
+        jPanel8.setMinimumSize(new java.awt.Dimension(88, 38));
+        jPanel8.setOpaque(false);
+
+        jLabel9.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Vote for MPA");
+        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pv_mna_containerPanel.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 440, 40));
+
+        javax.swing.GroupLayout pv_mna_PanelLayout = new javax.swing.GroupLayout(pv_mna_Panel);
+        pv_mna_Panel.setLayout(pv_mna_PanelLayout);
+        pv_mna_PanelLayout.setHorizontalGroup(
+            pv_mna_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pv_mna_PanelLayout.createSequentialGroup()
+                .addContainerGap(247, Short.MAX_VALUE)
+                .addComponent(pv_mna_containerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(246, Short.MAX_VALUE))
+        );
+        pv_mna_PanelLayout.setVerticalGroup(
+            pv_mna_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pv_mna_PanelLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(pv_mna_containerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        mainPanel.add(pv_mna_Panel, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(navbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(navbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(1, 1, 1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        cardlayout.show(mainPanel, "postVotingPanel");
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        cardlayout.show(mainPanel, "loginPanel");
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
      * @param args the command line arguments
@@ -422,6 +637,7 @@ public class Voter extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -429,8 +645,7 @@ public class Voter extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -447,6 +662,20 @@ public class Voter extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel loginPanel;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel navbarPanel;
+    private javax.swing.JPanel pv_mna_Panel;
+    private javax.swing.JLabel pv_mna_candidateName;
+    private javax.swing.JPanel pv_mna_containerPanel;
+    private javax.swing.JPanel pv_mna_jPanel1;
+    private javax.swing.JLabel pv_mna_partyFlag;
+    private javax.swing.JLabel pv_mna_partyName;
+    private javax.swing.JLabel pv_mna_partySymbol;
+    private javax.swing.JLabel pv_mna_tick_icon;
+    private javax.swing.JButton pv_mna_viewDetailButton;
     // End of variables declaration//GEN-END:variables
 }
